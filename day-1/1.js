@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run --allow-read=input.txt
 
-import {calories} from "./calories.js";
+import { calories } from "./calories.js";
 
 async function maxCalories(filepath) {
   const inputFile = await Deno.open(filepath);
@@ -11,6 +11,5 @@ async function maxCalories(filepath) {
   }
   return max;
 }
-
 
 console.log(await maxCalories("./input.txt"));

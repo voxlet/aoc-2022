@@ -24,5 +24,5 @@ Deno.test("can collect async iterable into array", async () => {
       yield v;
     }
   }
-  assertEquals([0,1,2,3,4,5,6,7,8,9], await collect(gen()));
-})
+  assertEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], await collect(gen()));
+});

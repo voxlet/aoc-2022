@@ -9,8 +9,7 @@ const scores = {
   X: 0,
   Y: 3,
   Z: 6,
-}
-
+};
 
 const rule = {
   X: {
@@ -28,7 +27,7 @@ const rule = {
     B: "C",
     C: "A",
   },
-}
+};
 
 async function score(filepath) {
   const inputFile = await Deno.open(filepath);
@@ -45,4 +44,4 @@ async function score(filepath) {
   return score;
 }
 
-console.log(await score("./input.txt"))
+console.log(await score("./input.txt"));

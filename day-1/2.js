@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run --allow-read=input.txt
 
-import {calories} from "./calories.js";
+import { calories } from "./calories.js";
 
 async function top3(filepath) {
   const inputFile = await Deno.open(filepath);

@@ -15,7 +15,9 @@ if (types.length !== 52) {
   throw Error("typo");
 }
 
-const priorities = Object.fromEntries(types.split("").map((t, i) => [t, i + 1]));
+const priorities = Object.fromEntries(
+  types.split("").map((t, i) => [t, i + 1])
+);
 
 async function badgePrioritySum() {
   let sum = 0;
@@ -42,7 +44,9 @@ async function* groups(filepath) {
 
 function badgeItem(group) {
   const [firstLine, secondLine, thirdLine] = group;
-  const [first, second] = [firstLine, secondLine].map(line => new Set(line.split("")));
+  const [first, second] = [firstLine, secondLine].map(
+    (line) => new Set(line.split(""))
+  );
   for (const t of thirdLine) {
     if (first.has(t) && second.has(t)) {
       console.log(t);

@@ -9,19 +9,19 @@ const scores = {
   lose: 0,
   draw: 3,
   win: 6,
-}
+};
 
 const draws = {
   A: "X",
   B: "Y",
   C: "Z",
-}
+};
 
 const wins = {
   A: "Y",
   B: "Z",
   C: "X",
-}
+};
 
 async function score(filepath) {
   const inputFile = await Deno.open(filepath);
@@ -41,4 +41,4 @@ function result(lhs, rhs) {
   return draws[lhs] === rhs ? "draw" : wins[lhs] === rhs ? "win" : "lose";
 }
 
-console.log(await score("./input.txt"))
+console.log(await score("./input.txt"));

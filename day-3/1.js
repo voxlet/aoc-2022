@@ -12,15 +12,17 @@ Deno.test("even number of lines", async () => {
       throw Error("odd");
     }
   }
-})
+});
 
 const types = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 Deno.test("type sanity", () => {
   assertEquals(52, types.length);
-})
+});
 
-const priorities = Object.fromEntries(types.split("").map((t, i) => [t, i + 1]));
+const priorities = Object.fromEntries(
+  types.split("").map((t, i) => [t, i + 1])
+);
 
 async function dupItemPrioritySum() {
   let sum = 0;
@@ -35,7 +37,7 @@ async function dupItemPrioritySum() {
 
 function dupItem(line) {
   const all = line.split("");
-  const halfLength = all.length/2;
+  const halfLength = all.length / 2;
   const first = new Set(all.slice(0, halfLength));
   for (const item of all.slice(halfLength)) {
     if (first.has(item)) {
