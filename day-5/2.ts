@@ -16,13 +16,9 @@ async function topStacks() {
 async function rearrange(stacks: string[][], ls: AsyncIterable<string>) {
   for await (const line of ls) {
     const { times, from, to } = parseMove(line);
-    for (let i = 0; i < times; ++i) {
-      const v = stacks[from - 1].pop();
-      if (!v) {
-        throw Error("stack underflow");
-      }
-      stacks[to - 1].push(v);
-    }
+    const vs = stacks[from - 1].slice(-times);
+    stacks[from - 1].length -= times;
+    stacks[to - 1].push(...vs);
   }
 }
 
