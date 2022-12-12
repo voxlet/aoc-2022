@@ -4,7 +4,7 @@ import {
   assertFalse,
   assert,
 } from "https://deno.land/std@0.167.0/testing/asserts.ts";
-import { lines } from "../util.js";
+import { lines } from "../util.ts";
 import { ascendingStart, parseLine } from "./util.js";
 
 const filepath = "input.txt";

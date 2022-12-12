@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno test --allow-read=input.txt
 
-import { lines } from "../util.js";
+import { lines } from "../util.ts";
 import { ascendingStart, parseLine } from "./util.js";
 
 const filepath = "input.txt";

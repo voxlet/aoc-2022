@@ -1,6 +1,6 @@
 #!/usr/bin/env -S deno run --allow-read=input.txt
 
-import { lines } from "../util.js";
+import { lines } from "../util.ts";
 
 const filepath = "input.txt";
 
