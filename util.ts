@@ -20,13 +20,39 @@ export async function collect<T>(
   return res;
 }
 
+async function* gen(n: number) {
+  for await (const v of [...Array(n)].map((_, i) => Promise.resolve(i))) {
+    yield v;
+  }
+}
+
 Deno.test("can collect async iterable into array", async () => {
-  async function* gen() {
-    for await (const v of [...Array(10)].map((_, i) => Promise.resolve(i))) {
-      yield v;
+  assertEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], await collect(gen(10)));
+});
+
+export async function* partition<T>(
+  length: number,
+  asyncIterable: AsyncIterable<T>
+) {
+  let p = [];
+  for await (const v of asyncIterable) {
+    p.push(v);
+    if (p.length === length) {
+      yield p;
+      p = [];
     }
   }
-  assertEquals([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], await collect(gen()));
+}
+
+Deno.test("can partition async iterable", async () => {
+  assertEquals(
+    [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+    ],
+    await collect(partition(3, gen(10)))
+  );
 });
 
 export function lowerBound<T>(sortedArray: T[], target: T): number {
