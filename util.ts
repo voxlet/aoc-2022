@@ -56,11 +56,18 @@ Deno.test("can partition async iterable", async () => {
 });
 
 export function lowerBound<T>(sortedArray: T[], target: T): number {
+  return lowerBoundWith(sortedArray, (t: T) => t < target);
+}
+
+export function lowerBoundWith<T>(
+  sortedArray: T[],
+  comp: (element: T) => boolean
+): number {
   let lo = 0;
   let hi = sortedArray.length;
   while (lo != hi) {
     const mid = Math.floor((lo + hi) / 2);
-    if (sortedArray[mid] < target) {
+    if (comp(sortedArray[mid])) {
       lo = mid + 1;
     } else {
       hi = mid;
