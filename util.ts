@@ -86,3 +86,52 @@ Deno.test("can find lower bound", () => {
   assertEquals(4, lowerBound([1, 2, 3, 4], 5));
   assertEquals(4, lowerBound([1, 2, 3, 4], 6));
 });
+
+export function* powerSet<T>(s: Set<T>) {
+  const vs = [...s];
+  const res: T[] = [];
+  function* find(i: number): Generator<Set<T>> {
+    if (i === 0) {
+      yield new Set(res);
+    } else {
+      const next = i - 1;
+
+      res.push(vs[next]);
+      yield* find(next);
+
+      res.pop();
+      yield* find(next);
+    }
+  }
+
+  yield* find(s.size);
+}
+
+Deno.test("power set", () => {
+  assertEquals(
+    [...powerSet(new Set([1, 2]))],
+    [new Set([1, 2]), new Set([2]), new Set([1]), new Set()]
+  );
+});
+
+export function difference<T>(a: Set<T>, b: Set<T>) {
+  const res = new Set(a);
+  for (const v of b) {
+    res.delete(v);
+  }
+  return res;
+}
+
+Deno.test("difference", () => {
+  assertEquals(difference(new Set([]), new Set([1, 2, 3, 4])), new Set([]));
+
+  assertEquals(
+    difference(new Set([1, 2, 3, 4]), new Set([])),
+    new Set([1, 2, 3, 4])
+  );
+
+  assertEquals(
+    difference(new Set([1, 2, 3, 4]), new Set([2, 4])),
+    new Set([1, 3])
+  );
+});
