@@ -10,6 +10,43 @@ export async function* lines(filepath: string) {
   inputFile.close();
 }
 
+export function last<T>(a: T[]): T {
+  return a[a.length - 1];
+}
+
+export function take<T>(iterable: Iterable<T>, count: number): T[] {
+  const res = [];
+  const it = iterable[Symbol.iterator]();
+  for (let i = 0; i < count; ++i) {
+    const r = it.next();
+    if (r.done) {
+      break;
+    }
+    res.push(r.value);
+  }
+  return res;
+}
+
+Deno.test("take", () => {
+  assertEquals(take([], 5), []);
+  assertEquals(take([1], 0), []);
+  assertEquals(take([1], 2), [1]);
+  assertEquals(take([1, 2, 3], 2), [1, 2]);
+});
+
+export function* repeat<T>(a: T[]): Generator<T> {
+  let i = 0;
+  while (true) {
+    yield a[i % a.length];
+    ++i;
+  }
+}
+
+Deno.test("repeat", () => {
+  assertEquals(take(repeat([1, 2]), 5), [1, 2, 1, 2, 1]);
+  assertEquals(take(repeat([1, 2, 3, 4]), 5), [1, 2, 3, 4, 1]);
+});
+
 export async function collect<T>(
   asyncIterable: AsyncIterable<T>
 ): Promise<T[]> {
