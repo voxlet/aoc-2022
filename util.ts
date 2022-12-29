@@ -92,6 +92,22 @@ Deno.test("can partition async iterable", async () => {
   );
 });
 
+export async function* mapAsync<T, U>(
+  asyncIterable: AsyncIterable<T>,
+  xf: (v: T) => U | Promise<U>
+) {
+  for await (const v of asyncIterable) {
+    yield await xf(v);
+  }
+}
+
+Deno.test("can map async iterable", async () => {
+  assertEquals(
+    await collect(mapAsync(gen(10), (v) => v * v)),
+    [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+  );
+});
+
 export function lowerBound<T>(sortedArray: T[], target: T): number {
   return lowerBoundWith(sortedArray, (t: T) => t < target);
 }
