@@ -47,6 +47,32 @@ Deno.test("repeat", () => {
   assertEquals(take(repeat([1, 2, 3, 4]), 5), [1, 2, 3, 4, 1]);
 });
 
+export function* window<T>(a: Iterable<T>, size: number, step: number) {
+  const w = [];
+  for (const v of a) {
+    w.push(v);
+    if (w.length === size) {
+      yield [...w];
+      w.splice(0, step);
+    }
+  }
+  if (w.length > 0) {
+    yield w;
+  }
+}
+
+Deno.test("window", () => {
+  assertEquals(take(window([], 100, 100), 1), []);
+  assertEquals(take(window([1, 2, 3], 1, 1), 3), [[1], [2], [3]]);
+  assertEquals(take(window([1, 2], 2, 1), 3), [[1, 2], [2]]);
+  assertEquals(take(window(repeat([1, 2, 3, 4, 5, 6, 7, 8]), 3, 2), 4), [
+    [1, 2, 3],
+    [3, 4, 5],
+    [5, 6, 7],
+    [7, 8, 1],
+  ]);
+});
+
 export async function collect<T>(
   asyncIterable: AsyncIterable<T>
 ): Promise<T[]> {
