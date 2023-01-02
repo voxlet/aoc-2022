@@ -1,11 +1,9 @@
 #!/usr/bin/env -S deno run --allow-read=input.txt
 
+import { extentIter, toKey, Vec2 } from "../util.ts";
 import {
   State,
-  extentIter,
   extent,
-  toKey,
-  Vec2,
   parse,
   filepath,
   propose,

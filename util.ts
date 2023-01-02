@@ -214,3 +214,37 @@ Deno.test("difference", () => {
     new Set([1, 3])
   );
 });
+
+export type Vec2 = [x: number, y: number];
+
+export function isEqual(a: Readonly<Vec2>, b: Readonly<Vec2>): boolean {
+  return a[0] === b[0] && a[1] === b[1];
+}
+
+export function add(a: Readonly<Vec2>, b: Readonly<Vec2>): Vec2 {
+  return [a[0] + b[0], a[1] + b[1]];
+}
+
+export function toKey(v: Readonly<Vec2>): string {
+  return JSON.stringify(v);
+}
+
+export function fromKey(k: string): Vec2 {
+  return JSON.parse(k);
+}
+
+export type Extent = [Vec2, Vec2];
+
+export function* extentIter(ext: Extent): Generator<Vec2> {
+  const [min, max] = ext;
+  for (let y = min[1]; y <= max[1]; ++y) {
+    for (let x = min[0]; x <= max[0]; ++x) {
+      yield [x, y];
+    }
+  }
+}
+
+export function isInside(ext: Extent, v: Vec2): boolean {
+  const [min, max] = ext;
+  return v[0] >= min[0] && v[0] <= max[0] && v[1] >= min[1] && v[1] <= max[1];
+}

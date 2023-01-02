@@ -1,9 +1,8 @@
 #!/usr/bin/env -S deno run --allow-read=input.txt
 
+import { toKey, Vec2 } from "../util.ts";
 import {
   State,
-  toKey,
-  Vec2,
   parse,
   filepath,
   propose,

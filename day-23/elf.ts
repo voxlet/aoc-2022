@@ -1,20 +1,6 @@
-import { collect, lines, repeat, take, window } from "../util.ts";
+import { add, collect, Extent, extentIter, fromKey, lines, repeat, take, toKey, Vec2, window } from "../util.ts";
 
 export const filepath = "input.txt";
-
-export type Vec2 = [x: number, y: number];
-
-function add(a: Readonly<Vec2>, b: Readonly<Vec2>): Vec2 {
-  return [a[0] + b[0], a[1] + b[1]];
-}
-
-export function toKey(v: Readonly<Vec2>): string {
-  return JSON.stringify(v);
-}
-
-function fromKey(k: string): Vec2 {
-  return JSON.parse(k);
-}
 
 const directions = {
   north: [0, 1],
@@ -48,17 +34,6 @@ function* posIter(state: Pick<State, "elves">) {
 type Proximities = {
   [d in Direction]: boolean;
 };
-
-type Extent = [Vec2, Vec2];
-
-export function* extentIter(ext: Extent): Generator<Vec2> {
-  const [min, max] = ext;
-  for (let y = min[1]; y <= max[1]; ++y) {
-    for (let x = min[0]; x <= max[0]; ++x) {
-      yield [x, y];
-    }
-  }
-}
 
 function* adjacencyIter(pos: Vec2) {
   for (const [x, y] of [
